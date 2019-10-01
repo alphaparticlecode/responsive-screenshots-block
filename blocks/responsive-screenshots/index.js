@@ -32,9 +32,17 @@ export default registerBlockType("rs-block/responsive-screenshots", {
     __("Mockups", "rs-block"),
   ],
   edit: props => {
-
+    return wp.element.createElement(
+        'div',
+        null,
+        'Responsive screenshots block goes here.'
+    );
   },
   save: props => {
-
+    return wp.element.createElement(
+        'div',
+        null,
+        'Responsive screenshots block goes here.'
+    );
   }
 });
