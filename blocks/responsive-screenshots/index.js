@@ -5,7 +5,22 @@ import "./style.scss";
  * Internal block libraries
  */
 const { __ } = wp.i18n;
-const { registerBlockType } = wp.blocks;
+const {
+  registerBlockType
+} = wp.blocks;
+
+const {
+  InspectorControls,
+} = wp.editor
+
+const {
+  PanelBody,
+  PanelRow,
+  FormToggle,
+} = wp.components ;
+
+const { Fragment } = wp.element;
+
 const { RichText } = wp.editor;
 
 /**
@@ -31,18 +46,82 @@ export default registerBlockType("rs-block/responsive-screenshots", {
     __("Screenshots", "rs-block"),
     __("Mockups", "rs-block"),
   ],
+  attributes: {
+    desktopVisible: {
+      type: 'boolean',
+      default: true
+    },
+    tabletVisible: {
+      type: 'boolean',
+      default: true
+    },
+    mobileVisible: {
+      type: 'boolean',
+      default: true
+    }
+  },
   edit: props => {
-    return wp.element.createElement(
-        'div',
-        null,
-        'Responsive screenshots block goes here.'
-    );
+    const { attributes: { desktopVisible, tabletVisible, mobileVisible },
+                className, setAttributes } = props;
+
+    const toggleDesktopVisible = () => setAttributes( { desktopVisible: ! desktopVisible } );
+    const toggleTabletVisible = () => setAttributes( { tabletVisible: ! tabletVisible } );
+    const toggleMobileVisible = () => setAttributes( { mobileVisible: ! mobileVisible } );
+
+    return [
+      <Fragment>
+        <InspectorControls>
+          <PanelBody 
+            title={ __('Display Settings', 'rs-block') }
+          >
+            <PanelRow>
+              <label
+                  htmlFor="desktop-form-toggle"
+              >
+                  { __( 'Desktop Visible', 'rs-block' ) }
+              </label>
+              <FormToggle
+                  id="desktop-form-toggle"
+                  label={ __( 'Desktop Visible', 'rs-block' ) }
+                  checked={ desktopVisible }
+                  onChange={ toggleDesktopVisible }
+              />
+            </PanelRow>
+            <PanelRow>
+              <label
+                  htmlFor="tablet-form-toggle"
+              >
+                  { __( 'Tablet Visible', 'rs-block' ) }
+              </label>
+              <FormToggle
+                  id="tablet-form-toggle"
+                  label={ __( 'Tablet Visible', 'rs-block' ) }
+                  checked={ tabletVisible }
+                  onChange={ toggleTabletVisible }
+              />
+            </PanelRow>
+            <PanelRow>
+              <label
+                  htmlFor="mobile-form-toggle"
+              >
+                  { __( 'Mobile Visible', 'rs-block' ) }
+              </label>
+              <FormToggle
+                  id="mobile-form-toggle"
+                  label={ __( 'Mobile Visible', 'rs-block' ) }
+                  checked={ mobileVisible }
+                  onChange={ toggleMobileVisible }
+              />
+            </PanelRow>
+          </PanelBody>
+        </InspectorControls>
+      </Fragment>,
+      <p>Test123</p>
+    ];
   },
   save: props => {
-    return wp.element.createElement(
-        'div',
-        null,
-        'Responsive screenshots block goes here.'
+    return (
+      <p>Test123</p>
     );
   }
 });
